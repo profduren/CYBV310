@@ -1,0 +1,23 @@
+
+
+Coding Exercises #1 - Course Week 2
+
+Download the CertificateUtilities project from D2L or from github and use the project as the starting point for the assignment.  When finished upload the files specified below to D2L.
+
+1.  Update the CertificateUtilities.c file to use CONSTANTS instead of hardcoded strings for the string buffer size and for the RDN attribute strings (eg. CN, O, etc).  
+
+	Turn the new .c file in as CertificateUtilities_HW1.c.
+
+2.  Using the CertificateUtilities.c from 1, add functionality to collect Organization Unit (OU), State (ST), and Locality (L).  
+	
+	Turn the new .c file in as CertificateUtilities_HW2.c
+
+3.  Using the CertificateUtilities.c from 2, update the GetRelativeDistinguishedName() function to include a third parameter called rdnDescription.  This value should be a description of the attribute, such as "Common Name", "Organization", and "State".  Use this value to enhance the prompt for the user when collecting the value. The new function should look like this:
+
+	int GetRelativeDistinguishedName(char *rdnAttribute, char *rdnValue, char *rdnDescription)
+
+	Turn the new .c file in as CertificateUtilities_HW3.c
+
+4.  Using the CertificateUtilities.c from 3, update the main() function such that it only prints attributes that the user entered, or attributes with value lengths greater than zero.  This will require you to either check the return value from GetRelativeDistinguishedName() or check the length of the value with strlen() before printing each value.
+
+	Turn the new .c file in as CertificateUtilities_HW4.c

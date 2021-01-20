@@ -74,7 +74,6 @@ int GetRelativeDistinguishedName(char *rdnAttribute, char *rdnValue)
 		result = 0;
 	}
 
-
     return result;
 }
 
