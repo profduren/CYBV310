@@ -11,6 +11,13 @@
 ///////////////////////////////////////////////////////
 //                CONSTANTS
 ///////////////////////////////////////////////////////
+#define MAX_RDN_LENGTH     256
+#define RDN_CN   "CN"
+#define RDN_C    "C"
+#define RDN_O    "O"
+#define RDN_OU   "OU"
+#define RDN_L    "L"
+#define RDN_ST   "ST"
 
 ///////////////////////////////////////////////////////
 //               typedefs and structures
@@ -42,17 +49,70 @@ char* TrimRight(char* str, const char* trimChars);
 ******************************************************/
 int main(int argc, char **argv)
 {
-	char commonName[256];
-	char organization[256];
-	char country[256];
+	char commonName[MAX_RDN_LENGTH];
+	char organization[MAX_RDN_LENGTH];
+	char organizationalUnit[MAX_RDN_LENGTH];
+	char country[MAX_RDN_LENGTH];
+	char locality[MAX_RDN_LENGTH];
+	char state[MAX_RDN_LENGTH];
+	char distinguishedName[MAX_RDN_LENGTH * 6];
+	char *pNamePos;
+	char *separator="";
 
-	GetRelativeDistinguishedName("CN", commonName);
-	GetRelativeDistinguishedName("O", organization);
-	GetRelativeDistinguishedName("C", country);
+	GetRelativeDistinguishedName(RDN_CN, "Common Name", commonName);
+	GetRelativeDistinguishedName(RDN_O,"Organization",  organization);
+	GetRelativeDistinguishedName(RDN_OU, "Organizational Unit", organizationalUnit);
+	GetRelativeDistinguishedName(RDN_C, "Country", country);
+	GetRelativeDistinguishedName(RDN_L, "Locality", locality);
+	GetRelativeDistinguishedName(RDN_ST, "State", state);
 
-	printf("\r\nThe Distinguished Name (DN) is: CN=%s, O=%s, C=%s\r\n", commonName, organization, country);
+	// Initialize the DN to zero length
+	distinguishedName[0] = '\0';
+
+	// print each attribute that has a value
+	printf("\r\nThe Distinguished Name (DN) is: ");
+	if (strlen(commonName) > 0)
+	{
+		printf("%s=%s", RDN_CN, commonName);
+		separator = ", ";
+	}
+	if (strlen(organization) > 0)
+	{
+		printf("%s%s=%s", separator, RDN_O, organization);
+		separator = ", ";
+	}
+	if (strlen(organizationalUnit) > 0)
+	{
+		printf("%s%s=%s", separator, RDN_OU, organizationalUnit);
+		separator = ", ";
+	}
+	if (strlen(country) > 0)
+	{
+		printf("%s%s=%s", separator, RDN_C, country);
+		separator = ", ";
+	}
+	if (strlen(locality) > 0)
+	{
+		printf("%s%s=%s", separator, RDN_L, locality);
+		separator = ", ";
+	}
+	if (strlen(state) > 0)
+	{
+		printf("%s%s=%s", separator, RDN_ST, state);
+	}
+
 
 	return 0;
+}
+
+/*****************************************************
+ *
+ * AddRelativeDistinguishedName
+ *
+******************************************************/
+void AddRelativeDistinguishedName(char* rdnAttribute, char* rdnValue)
+{
+
 }
 
 /*****************************************************
@@ -60,13 +120,13 @@ int main(int argc, char **argv)
  * GetRelativeDistinguishedName
  *
 ******************************************************/
-int GetRelativeDistinguishedName(char *rdnAttribute, char *rdnValue)
+int GetRelativeDistinguishedName(char *rdnAttribute, char* rdnDescription, char *rdnValue)
 {
 	int result = -1;
 
 	rdnValue[0] = '\0';
 
-	printf("Please enter the value for %s: ", rdnAttribute);
+	printf("Please enter the value for %s (%s): ", rdnDescription, rdnAttribute);
 	fgets(rdnValue, 256, stdin);
 	if (strlen(rdnValue) > 0 )
 	{
