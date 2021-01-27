@@ -1,0 +1,75 @@
+
+1.  Write a program that counts to ten.  The program must print each value, so the output of the program should look like this:
+
+Starting:
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+Done!
+
+The function MUST use a for loop and a counter to print the values.
+
+Copy the .c file from your project and turn it is as HW2_1.c.
+
+
+2. In C, one function can call another. Write a program that calls a function named one_three(). This function should display 
+the word one on one line, call a second function named two(), and then display the word three on one line. The function two() 
+should display the word two on one line. The main() function should display the phrase starting now: before calling one_three() 
+and display done! after calling it. Thus, the output should look like the following: 
+
+	Starting: 
+	one
+	two
+	three 
+	Done! 
+
+Copy the .c file from your project and turn it is as HW2_2.c.
+
+
+
+3. Write a program which prints the sizes (in bytes) of the data types using the sizeof() function:
+
+	printf("sizeof(char) = %u\n", sizeof(char));
+
+for all of the native types in C:
+
+	char
+	unsigned char
+	short
+	unsigned short
+	int
+	unsigned int
+	long
+	unsigned long
+	float
+	double
+
+Copy the .c file from your project and turn it is as HW2_3.c.
+
+
+4. Using the CertificateUtilities.c program from assignment 1, instead of storing the RDN values using individual variables in main(), 
+use the following structure to hold the RDN values:
+
+typedef struct
+{
+    char commonName[MAX_RDN_LENGTH];
+    char organization[MAX_RDN_LENGTH];
+    char country[MAX_RDN_LENGTH];
+    char organizationUnit[MAX_RDN_LENGTH];
+    char locality[MAX_RDN_LENGTH];
+    char state[MAX_RDN_LENGTH];
+} DistinguishedName;
+
+You may declare the structure on the stack or globally in the data segment.  Instead of printing the distinguished name in main, write 
+a function that will print the DN.  The function MUST take a pointer to the DistinguishedName structure as a parameter:
+
+    	void PrintDistinguishedName(DistinguishedName *pDN);
+
+Copy the .c file from your project and turn it is as HW2_4.c.

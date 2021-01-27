@@ -23,6 +23,45 @@
 //               typedefs and structures
 ///////////////////////////////////////////////////////
 
+/* Zero-based offset, used as an index into the
+   descriptive text array. */
+typedef enum
+{
+	RDN_COMMON_NAME = 0,
+	RDN_ORGANIZATION,
+	RDN_ORGANIZATION_UNIT,
+	RDN_COUNTY,
+	RDN_LOCALITY,
+	RDN_STATE,
+	RDN_COUNT // number of rdn types
+} RDN_TYPE;
+
+char* rdnAttributes[RDN_COUNT] = { "CN", "O", "OU", "C", "L", "S" };
+char* rdnDescriptions[RDN_COUNT] = { "Common Name",
+							"Organization",
+							"Organization Unit",
+							"County",
+							"Locality",
+							"State" };
+
+/* Attribute type and value for the RDN. */
+typedef struct
+{
+	RDN_TYPE type;
+	char value[MAX_RDN_LENGTH];
+} RelativeDistinguishedName;
+
+/* DistinguishedName is a structure of RDN values. */
+typedef struct
+{
+	char commonName[MAX_RDN_LENGTH];
+	char organization[MAX_RDN_LENGTH];
+	char country[MAX_RDN_LENGTH];
+	char organizationUnit[MAX_RDN_LENGTH];
+	char locality[MAX_RDN_LENGTH];
+	char state[MAX_RDN_LENGTH];
+} DistinguishedName;
+
 ///////////////////////////////////////////////////////
 //               globalVariables
 ///////////////////////////////////////////////////////
@@ -49,70 +88,16 @@ char* TrimRight(char* str, const char* trimChars);
 ******************************************************/
 int main(int argc, char **argv)
 {
-	char commonName[MAX_RDN_LENGTH];
-	char organization[MAX_RDN_LENGTH];
-	char organizationalUnit[MAX_RDN_LENGTH];
-	char country[MAX_RDN_LENGTH];
-	char locality[MAX_RDN_LENGTH];
-	char state[MAX_RDN_LENGTH];
-	char distinguishedName[MAX_RDN_LENGTH * 6];
-	char *pNamePos;
-	char *separator="";
+	DistinguishedName distinguishedName;
 
-	GetRelativeDistinguishedName(RDN_CN, "Common Name", commonName);
-	GetRelativeDistinguishedName(RDN_O,"Organization",  organization);
-	GetRelativeDistinguishedName(RDN_OU, "Organizational Unit", organizationalUnit);
-	GetRelativeDistinguishedName(RDN_C, "Country", country);
-	GetRelativeDistinguishedName(RDN_L, "Locality", locality);
-	GetRelativeDistinguishedName(RDN_ST, "State", state);
+	GetRelativeDistinguishedName(RDN_CN, "Common Name", distinguishedName.commonName);
 
-	// Initialize the DN to zero length
-	distinguishedName[0] = '\0';
+	// TODO: Collect the remaining RDN values
 
-	// print each attribute that has a value
-	printf("\r\nThe Distinguished Name (DN) is: ");
-	if (strlen(commonName) > 0)
-	{
-		printf("%s=%s", RDN_CN, commonName);
-		separator = ", ";
-	}
-	if (strlen(organization) > 0)
-	{
-		printf("%s%s=%s", separator, RDN_O, organization);
-		separator = ", ";
-	}
-	if (strlen(organizationalUnit) > 0)
-	{
-		printf("%s%s=%s", separator, RDN_OU, organizationalUnit);
-		separator = ", ";
-	}
-	if (strlen(country) > 0)
-	{
-		printf("%s%s=%s", separator, RDN_C, country);
-		separator = ", ";
-	}
-	if (strlen(locality) > 0)
-	{
-		printf("%s%s=%s", separator, RDN_L, locality);
-		separator = ", ";
-	}
-	if (strlen(state) > 0)
-	{
-		printf("%s%s=%s", separator, RDN_ST, state);
-	}
 
+	// Call PrintDistinguishedName() to print the DN
 
 	return 0;
-}
-
-/*****************************************************
- *
- * AddRelativeDistinguishedName
- *
-******************************************************/
-void AddRelativeDistinguishedName(char* rdnAttribute, char* rdnValue)
-{
-
 }
 
 /*****************************************************
