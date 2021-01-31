@@ -101,6 +101,7 @@ int main(int argc, char **argv)
 		printf("%s%s=%s", separator, RDN_ST, state);
 	}
 
+	printf("\n\n");
 
 	return 0;
 }
@@ -124,10 +125,8 @@ int GetRelativeDistinguishedName(char *rdnAttribute, char* rdnDescription, char 
 {
 	int result = -1;
 
-	rdnValue[0] = '\0';
-
 	printf("Please enter the value for %s (%s): ", rdnDescription, rdnAttribute);
-	fgets(rdnValue, 256, stdin);
+	fgets(rdnValue, MAX_RDN_LENGTH, stdin);
 	if (strlen(rdnValue) > 0 )
 	{
 		TrimRight(rdnValue, NULL);
