@@ -1,4 +1,7 @@
 
+
+Coding Exercises 2 - Course Week 3
+
 1.  Write a program that counts to ten.  The program must print each value, so the output of the program should look like this:
 
 Starting:
